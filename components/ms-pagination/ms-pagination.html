@@ -1,5 +1,5 @@
 <div class="btn-group">
-    <a class="btn blue" :attr="{disabled:@current===1}" :click="@prevPage">
+    <a class="btn blue" :attr="{disabled:@current===1 || @current === 0}" :click="@prevPage">
         <i class="icon-step-backward"></i>上一页
     </a>
     <a class="btn success">{{ @current }}/{{ Math.ceil(@total/@pageSize) }}</a>

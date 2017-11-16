@@ -8,6 +8,7 @@ controlComponent.extend({
     template: require('./ms-input.html'),
     defaults: {
         text: '',
+        type: 'input', 
         mapValueToText(value) {
             this.text = value;
         },

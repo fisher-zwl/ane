@@ -7,6 +7,7 @@
 ``` html
 <div :controller="doc-input-basic">
     <xmp is="ms-input" :widget="{col:'name',value:@value,$rules:{required:true,message:'请输入名字'}}"></xmp>
+    <xmp is="ms-input" :widget="{col:'pass',value:'', type: 'password', placeholder:'请输入密码', $rules:{required:true}}"></xmp>
 </div>
 ```
 
@@ -16,7 +17,7 @@ import 'ane';
 
 const vm = avalon.define({
     $id: 'doc-input-basic',
-    value: '123'
+    value: 'atroy'
 });
 ```
 

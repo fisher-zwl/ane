@@ -63,6 +63,7 @@ avalon.component('ms-dialog', {
                     avalon.scan(vm.$dialog.get(0));
                 } else {
                     if (vm.$dialog) {
+                        $('body').trigger("click");
                         vm.$dialog.find('.bootbox-close-button').trigger('click');
                     }
                 }

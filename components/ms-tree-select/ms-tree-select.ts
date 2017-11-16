@@ -112,6 +112,10 @@ controlComponent.extend({
                 innerVm.multiple = v;
             });
             const value = this.value.toJSON();
+            this.$watch('treeData', function (v) {
+                self.treeData = v;
+                innerVm.treeData = v;
+            });
             this.mapValueToSelection(value);
         },
         onDispose() {

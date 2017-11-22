@@ -7,6 +7,7 @@
             ]"
             :for="option in @getFilteredOptions()"
             :click="@handleOptionClick($event, option)"
+            :attr="{title:@option.label}"
             role="menuitem">
             {{option.label}}
             <i class="fa fa-check" :visible="@isMultiple"></i>

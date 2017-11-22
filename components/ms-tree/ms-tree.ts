@@ -66,6 +66,7 @@ avalon.component('ms-tree', {
             var treeObj = initTree(event.target, this.tree.toJSON());
 
             this.$watch('checkedKeys', v => {
+                console.log(v.toJSON());
                 if (this.checkable) {
                     treeObj.checkAllNodes(false);
                     treeObj.getNodesByFilter(n => v.contains(n.key)).forEach(n => {
@@ -79,6 +80,7 @@ avalon.component('ms-tree', {
             });
             
             this.$watch('expandedKeys', v => {
+                console.log(v.toJSON());
                 treeObj.expandAll(false);
                 treeObj.getNodesByFilter(n => v.contains(n.key)).forEach(n => {
                     treeObj.expandNode(n, true);

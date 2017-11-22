@@ -11,6 +11,7 @@ avalon.component('ms-calendar-year-view', {
         view: 1,
         currentMonth: '',
         currentYear: 0,
+        monthListLang: { "Jan": "一月", "Feb": "二月", "Mar": "三月", "Apr": "四月", "May": "五月", "Jun": "六月", "Jul": "七月", "Aug": "八月", "Sep": "九月", "Oct": "十月", "Nov": "十一月", "Dec": "十二月" },
         isSelected(el) {
             return false;
         },
@@ -22,7 +23,7 @@ avalon.component('ms-calendar-year-view', {
             const monthList = moment.localeData().monthsShort();
             if (monthTable.length === 0) {
                 [0, 3, 6, 9].forEach(n => {
-                    monthTable.push(monthList.slice(n, n + 3).map(m => ({ label: m, value: m })));
+                    monthTable.push(monthList.slice(n, n + 3).map(m => ({ label: this.monthListLang[m], value: m })));
                 });
             }
             this.$watch('view', v => {

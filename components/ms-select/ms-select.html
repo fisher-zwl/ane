@@ -7,7 +7,7 @@
     aria-haspopup="true"
     :attr="{'aria-expanded': @panelVisible + ''}">
     <ul class="ane-select-selection" :class="[(@isMultiple ? 'ane-select-tags' : '')]">
-        <li class="ane-select-selected" :visible="!@isMultiple && (!@showSearch || !@panelVisible)">{{@displayValue}}</li>
+        <li class="ane-select-selected" :attr="{title:@displayValue}" :visible="!@isMultiple && (!@showSearch || !@panelVisible)">{{@displayValue}}</li>
         <li class="ane-select-choice" :for="choice in @selection">
             <span>{{choice.label}}</span>
             <i class="fa fa-times" :click="@removeSelection($event, choice) | stop"></i>

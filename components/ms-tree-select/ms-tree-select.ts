@@ -13,6 +13,8 @@ controlComponent.extend({
     defaults: {
         value: [],
         multiple: false,
+        expandedKeys: [],
+        checkedKeys: [],
         treeData: [],
         selection: [],
 
@@ -91,11 +93,12 @@ controlComponent.extend({
         },
         onInit(event) {
             const self = this;
-            
+
             emitToFormItem(this);
             this.$watch('value', v => {
                 const value = v.toJSON();
                 const nodes = this.mapValueToSelection(value);
+
                 this.handleChange({
                     target: { value: this.multiple ? value : value[0] || '', selection: nodes },
                     denyValidate: true,
@@ -116,6 +119,20 @@ controlComponent.extend({
                 self.treeData = v;
                 innerVm.treeData = v;
             });
+            // ==========================================
+            this.$watch('expandedKeys', function (v) {
+                console.log(v);
+                self.expandedKeys = v;
+                innerVm.expandedKeys = v;
+            });
+            this.$watch('checkedKeys', function (v) {
+                console.log(v);
+                self.checkedKeys = v;
+                innerVm.checkedKeys = v;
+            });
+            this.$fire('checkedKeys', this.checkedKeys);
+            this.$fire('expandedKeys', this.expandedKeys);
+            // ==========================================
             this.mapValueToSelection(value);
         },
         onDispose() {

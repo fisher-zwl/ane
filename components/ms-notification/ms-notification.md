@@ -46,22 +46,23 @@ avalon.define({
 
 ### API
 
-- `notification.success({ message, title, timeout })`
-- `notification.error({ message, title, timeout })`
-- `notification.info({ message, title, timeout })`
-- `notification.warning({ message, title, timeout })`
-- `notification.warn({ message, title, timeout })` 同 notification.warning
+- `notification.success({ message, title, timeout, layout })`
+- `notification.error({ message, title, timeout, layout })`
+- `notification.info({ message, title, timeout, layout })`
+- `notification.warning({ message, title, timeout, layout })`
+- `notification.warn({ message, title, timeout, layout })` 同 notification.warning
 
-| 参数 | 说明 | 类型 | 默认值 | 是否可选 |
-| --- | --- | --- | --- | --- |
-| message | 通知内容 | string | - | 必选 |
-| title | 通知标题 | string | - | 可选 |
-| timeout | 自动关闭的延时，单位毫秒 | number | 3000 | 可选 |
+| 参数 | 说明 | 类型 | 默认值 | 是否可选 | 可选值 |
+| --- | --- | --- | --- | --- | --- |
+| message | 通知内容 | string | - | 必选 | - |
+| title | 通知标题 | string | - | 可选 | - |
+| timeout | 自动关闭的延时，单位毫秒 | number | 3000 | 可选 | - |
+| layout | 提示位置 | string | topRight | 可选 | topLeft / topCenter / topCenter  centerLeft / center / rightCenter  bottomLeft / bottomCenter / bottomCenter |
 
 可以改变默认参数
 
 - `notification.config({ timeout })`
 
-| 参数 | 说明 | 类型 | 默认值 | 是否可选 |
-| --- | --- | --- | --- | --- |
-| timeout | 自动关闭的延时，单位毫秒 | number | 3000 | 可选 |
+| 参数 | 说明 | 类型 | 默认值 | 是否可选 | 可选值 |
+| --- | --- | --- | --- | --- | --- |
+| timeout | 自动关闭的延时，单位毫秒 | number | 3000 | 可选 | - |

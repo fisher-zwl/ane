@@ -7,7 +7,8 @@ export default function (cmpVm) {
 
     const vm = avalon.define({
         $id: cmpVm.panelVmId,
-        checkedKeys: [],
+        checkedKeyss: cmpVm.checkedKeys.toJSON(),
+        expandedKeyss: cmpVm.expandedKeys.toJSON(),
         selection: [],
         loading: false,
         multiple: cmpVm.multiple,

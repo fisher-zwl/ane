@@ -19,6 +19,7 @@ avalon.component('ms-calendar', {
         currentYearOptions: [],
         monthOptions: [],
         table: [],
+        monthListLang: { "Jan": "一月", "Feb": "二月", "Mar": "三月", "Apr": "四月", "May": "五月", "Jun": "六月", "Jul": "七月", "Aug": "八月", "Sep": "九月", "Oct": "十月", "Nov": "十一月", "Dec": "十二月" },
         handleYearChange(e) {
             this.$value.year(e.target.value)
             this.calcTable(this.$value.clone());
@@ -123,20 +124,23 @@ avalon.component('ms-calendar', {
                 table.push(tableRow);
             }
             this.table = table;
-            this.currentMonth = m.format('MMM');
+            // this.currentMonth = m.format('MMM');
+            this.currentMonth = this.monthListLang[m.format('MMM')];
             this.currentYear = m.year();
             this.currentYearOptions = avalon.range(this.currentYear - 10, this.currentYear + 9).map(y => ({ label: y, value: y }));
         },
         onInit(event) {
+            const that = this;
             this.$value = moment();
             this.$selected = moment();
-            const weekdays = moment.localeData().weekdaysMin();
+            // const weekdays = moment.localeData().weekdaysMin();
+            const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
             avalon.range(this.weekStart).forEach(n => {
                 weekdays.push(weekdays.shift());
             })
             this.weekdays = weekdays;
             const monthList = moment.localeData().monthsShort();
-            this.monthOptions = monthList.map(m => ({ label: m, value: m }));
+            this.monthOptions = monthList.map(m => ({ label: that.monthListLang[m], value: m }));
             this.calcTable(this.$value.clone());
 
             this.value = this.$value.toArray().toString();

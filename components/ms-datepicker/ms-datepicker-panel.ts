@@ -20,6 +20,7 @@ export default function (cmpVm) {
         // -1-天（时间）视图，0-月视图，1-年视图，2-十年视图，3-百年视图
         viewMode: 0,
         staged: 0,
+        monthListLang: { "Jan": "一月", "Feb": "二月", "Mar": "三月", "Apr": "四月", "May": "五月", "Jun": "六月", "Jul": "七月", "Aug": "八月", "Sep": "九月", "Oct": "十月", "Nov": "十一月", "Dec": "十二月" },
         $computed: {
             startOfDecade() {
                 return this.currentYear - this.currentYear % 10;
@@ -33,7 +34,8 @@ export default function (cmpVm) {
             this.staged = 0;
             this.$moment = cmpVm.selected ? moment(cmpVm.selected, cmpVm.format) : moment();
             this.currentDay = this.$moment.date();
-            this.currentMonth = this.$moment.format('MMM');
+            // this.currentMonth = this.$moment.format('MMM');
+            this.currentMonth = this.monthListLang[this.$moment.format('MMM')];
             this.currentYear = this.$moment.year();
             this.currentDateArray = this.$moment.toArray().toString();
             this.showTime = cmpVm.showTime;
@@ -76,7 +78,8 @@ export default function (cmpVm) {
         },
         handleYearViewSelect(el) {
             if (this.viewMode === 1) {
-                this.currentMonth = el.value;
+                // this.currentMonth = el.value;
+                this.currentMonth = el.label;
                 this.$moment.month(el.value);
                 this.currentDateArray = this.$moment.toArray().toString();
             }
@@ -98,7 +101,8 @@ export default function (cmpVm) {
         mutate(action, ...args) {
             this.$moment[action].apply(this.$moment, args);
             this.currentDay = this.$moment.date();
-            this.currentMonth = this.$moment.format('MMM');
+            // this.currentMonth = this.$moment.format('MMM');
+            this.currentMonth = this.monthListLang[this.$moment.format('MMM')];
             this.currentYear = this.$moment.year();
             this.currentDateArray = this.$moment.toArray().toString();
         },
@@ -114,7 +118,8 @@ export default function (cmpVm) {
         handleCalendarChange(e) {
             this.$moment = e.target.value;
             this.currentDay = this.$moment.date();
-            this.currentMonth = this.$moment.format('MMM');
+            // this.currentMonth = this.$moment.format('MMM');
+            this.currentMonth = this.monthListLang[this.$moment.format('MMM')];
             this.currentYear = this.$moment.year();
             if (!this.showTime) {
                 this.complete();

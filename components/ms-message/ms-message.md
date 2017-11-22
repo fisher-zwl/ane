@@ -42,21 +42,22 @@ avalon.define({
 
 ### API
 
-- `message.success({ content, duration })`
-- `message.error({ content, duration })`
-- `message.info({ content, duration })`
-- `message.warning({ content, duration })`
-- `message.warn({ content, duration })` 同 message.warning
+- `message.success({ content, duration, layout })`
+- `message.error({ content, duration, layout })`
+- `message.info({ content, duration, layout })`
+- `message.warning({ content, duration, layout })`
+- `message.warn({ content, duration, layout })` 同 message.warning
 
-| 参数 | 说明 | 类型 | 默认值 | 是否可选 |
-| --- | --- | --- | --- | --- |
+| 参数 | 说明 | 类型 | 默认值 | 是否可选 | 可选值 |
+| --- | --- | --- | --- | --- | --- |
 | content | 提示内容 | string | - | 必选 |
 | duration | 自动关闭的延时，单位毫秒 | number | 1500 | 可选 |
+| layout | 提示位置 | string | topRight | 可选 | topLeft / topCenter / topCenter  centerLeft / center / rightCenter  bottomLeft / bottomCenter / bottomCenter |
 
 可以改变默认参数
 
 - `message.config({ duration })`
 
-| 参数 | 说明 | 类型 | 默认值 | 是否可选 |
-| --- | --- | --- | --- | --- |
-| duration | 自动关闭的延时，单位毫秒 | number | 1500 | 可选 |
+| 参数 | 说明 | 类型 | 默认值 | 是否可选 | 可选值 |
+| --- | --- | --- | --- | --- | --- |
+| duration | 自动关闭的延时，单位毫秒 | number | 1500 | 可选 | - |

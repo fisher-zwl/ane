@@ -9,6 +9,7 @@ controlComponent.extend({
     defaults: {
         text: '',
         type: 'input', 
+        disabled: false,
         mapValueToText(value) {
             this.text = value;
         },

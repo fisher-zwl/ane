@@ -70,6 +70,7 @@ controlComponent.extend({
         panelVmId: '',
         panelVisible: false,
         panelClass: 'ane-select-dropdown',
+        extraClass: '',
         panelTemplate: require('./ms-select-panel.html'),
         handlePanelHide() {
             this.panelVisible = false;
@@ -93,6 +94,7 @@ controlComponent.extend({
         },
         onInit(event) {
             const self = this;
+            const vm = event.vmodel;
             if (this.options.length === 0) {
                 const descriptor = getChildTemplateDescriptor(this);
                 this.options = getOptions(descriptor);
@@ -109,6 +111,7 @@ controlComponent.extend({
                 });
             });
 
+            this.panelClass = vm.extraClass + ' ane-select-dropdown';
             this.panelVmId = this.$id + '_panel';
             const innerVm = getPanelVm(this);
             this.$watch('searchValue', debounce(v => {

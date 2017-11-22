@@ -4,7 +4,7 @@
 
 ```html
 <div :controller="tree">
-    <ms-tree-select :widget="{treeData: @data,multiple:true}"></ms-tree>
+    <ms-tree-select :widget="{treeData: @data, multiple:true, checkedKeys:@checkedKeys, expandedKeys:@expandedKeys}"></ms-tree>
 </div>
 ```
 
@@ -38,7 +38,9 @@ avalon.define({
                 {key: 13, title: 1234, children: []}
             ]},
         {key: 6, title: "fff", children: []}
-    ]
+    ],
+    expandedKeys: [1, 5],
+    checkedKeys: [1, 3]
 })
 ```
 
@@ -49,6 +51,8 @@ avalon.define({
 | value | 默认值 | string\[\] | \[\] |
 | multiple | 是否多选 | boolean | false |
 | treeData | 树数据 | TreeNode\[\] | \[\] |
+| expandedKeys | 展开的父节点的 key 集合 | string\[\] | \[\] |
+| checkedKeys | 勾选的节点的 key 集合 | string\[\] | \[\] |
 | showSearch | 是否显示搜索框 | boolean | false |
 | direction | 下拉框弹出方向，目前只有 `up`/`down` 两个选项 | string | `down` |
 

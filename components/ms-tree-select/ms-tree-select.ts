@@ -122,11 +122,15 @@ controlComponent.extend({
             // ==========================================
             this.$watch('checkedKeys', function (v) {
                 self.checkedKeys = v;
-                innerVm.checkedKeys = v;
+                if ( 8 != avalon.msie ) {
+                    innerVm.checkedKeys = v;
+                }
             });
             this.$watch('expandedKeys', function (v) {
                 self.expandedKeys = v;
-                innerVm.expandedKeys = v;
+                if ( 8 != avalon.msie ) {
+                    innerVm.expandedKeys = v;
+                }
             });
             this.$fire('checkedKeys', this.checkedKeys);
             this.$fire('expandedKeys', this.expandedKeys);

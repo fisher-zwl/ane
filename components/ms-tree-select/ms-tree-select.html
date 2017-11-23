@@ -25,7 +25,7 @@
     <i class="fa ane-tree-select-arrow"
         :class="[(@panelVisible ? 'fa-caret-up' : 'fa-caret-down')]"
         :visible="!@multiple"></i>
-    <ms-trigger :widget="{
+    <xmp is="ms-trigger" :widget="{
         width: @panelWidth,
         visible: @panelVisible,
         direction: @direction,
@@ -35,5 +35,5 @@
         withInBox: @withInBox,
         getTarget: @getTarget,
         onHide: @handlePanelHide}">
-    </ms-trigger>
+    </xmp>
 </div>

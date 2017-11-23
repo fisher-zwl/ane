@@ -6,7 +6,10 @@
 <div :controller="doc-form-validate">
     <xmp is="ms-form" :widget="{$form:@$form}">
         <ms-form-item :widget="{label:'标题'}">
-            <ms-input :widget="{col:'title',$rules:{required:true}}"></ms-input>
+            <ms-input :widget="{col:'title',$rules:{required:true,message:'请输入标题'}}"></ms-input>
+        </ms-form-item>
+        <ms-form-item :widget="{label:'邮箱'}">
+            <ms-input :widget="{col:'email',$rules:{required:true,pattern:/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,message:'请输入正确邮箱'}}"></ms-input>
         </ms-form-item>
         <ms-form-item :widget="{label:'内容'}">
             <ms-textarea :widget="{col:'content',$rules:{required:true}}"></ms-textarea>
@@ -37,16 +40,16 @@ const vm = avalon.define({
                 });
             }
         })
-        /*
+
         // 验证某个字段
-        vm.$form.validateField('title').then(result => {
+        vm.$form.validateField('email').then(result => {
             if (!result.isOk) {
                 message.success({
                     content: result.message
                 });
             }
         })
-        */
+
     }
 });
 ```
@@ -123,3 +126,21 @@ $form 对象可访问的属性如下：
 | validateField | 验证某个字段 | (fieldName) => Promise<{isOk: boolean, name: string, message: string}> |
 | validateFields | 验证多个或者所有字段 | (field?) => Promise&#x3C;boolean&#x3E; |
 | resetFields | 重置多个或者所有字段 | (field?) => void |
+
+
+avalon内置验证规则有：
+| 规则 | 描述 |
+|-----|-----|
+required(true) | 必须输入的字段。
+email(true) | 必须输入正确格式的电子邮件。
+url(true) | 必须输入正确格式的网址。
+date(true或正则) | 必须输入正确格式的日期。默认是要求YYYY-MM-dd这样的格式。
+number(true) | 必须输入合法的数字（负数，小数）。
+digits(true) | 必须输入整数。
+pattern(正则或true) | 让输入数据匹配给定的正则，如果没有指定，那么会到元素上找pattern属性转换成正则再匹配。
+equalto(ID名) | 输入值必须和 #id 元素的value 相同。
+maxlength：5	 | 输入长度最多是 5 的字符串（汉字算一个字符）。
+minlength：10  | 输入长度最小是 10 的字符串（汉字算一个字符）。
+chs(true) | 要求输入全部是中文。
+max:5  | 输入值不能大于 5。
+min:10  | 输入值不能小于 10。

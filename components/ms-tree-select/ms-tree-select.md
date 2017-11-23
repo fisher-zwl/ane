@@ -11,7 +11,7 @@
 ```js
 import * as avalon from 'avalon2';
 import 'ane';
-
+var data = 
 avalon.define({
     $id: "tree",
     data: [

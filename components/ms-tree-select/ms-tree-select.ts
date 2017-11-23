@@ -13,8 +13,8 @@ controlComponent.extend({
     defaults: {
         value: [],
         multiple: false,
-        expandedKeys: [],
         checkedKeys: [],
+        expandedKeys: [],
         treeData: [],
         selection: [],
 
@@ -23,7 +23,7 @@ controlComponent.extend({
         showSearch: false,
         searchValue: '',
         focusSearch() {
-            this.$element.getElementsByTagName('input').search.focus();
+            // this.$element.getElementsByTagName('input').search.focus();
         },
         withInBox(el) {
             return this.$element === el || avalon.contains(this.$element, el);
@@ -87,7 +87,7 @@ controlComponent.extend({
             if (nodes.length) {
                 this.displayValue = nodes[0].title;
             }
-            avalon.vmodels[this.panelVmId].checkedKeys = value;
+            // avalon.vmodels[this.panelVmId].checkedKeys = value;
             this.selection = nodes.map(n => ({ key: n.key, title: n.title }));
             return nodes;
         },
@@ -120,15 +120,13 @@ controlComponent.extend({
                 innerVm.treeData = v;
             });
             // ==========================================
-            this.$watch('expandedKeys', function (v) {
-                console.log(v);
-                self.expandedKeys = v;
-                innerVm.expandedKeys = v;
-            });
             this.$watch('checkedKeys', function (v) {
-                console.log(v);
                 self.checkedKeys = v;
                 innerVm.checkedKeys = v;
+            });
+            this.$watch('expandedKeys', function (v) {
+                self.expandedKeys = v;
+                innerVm.expandedKeys = v;
             });
             this.$fire('checkedKeys', this.checkedKeys);
             this.$fire('expandedKeys', this.expandedKeys);

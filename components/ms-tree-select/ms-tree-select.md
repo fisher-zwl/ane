@@ -4,7 +4,7 @@
 
 ```html
 <div :controller="tree">
-    <ms-tree-select :widget="{treeData: @data, multiple:true, checkedKeys:@checkedKeys, expandedKeys:@expandedKeys}"></ms-tree>
+    <ms-tree-select :widget="{treeData: @data, multiple:false, checkedKeys:@checkedKeys, expandedKeys:@expandedKeys, value:@value}"></ms-tree>
 </div>
 ```
 
@@ -40,7 +40,8 @@ avalon.define({
         {key: 6, title: "fff", children: []}
     ],
     expandedKeys: [1, 5],
-    checkedKeys: [1, 3]
+    checkedKeys: [],
+    value: [6]
 })
 ```
 

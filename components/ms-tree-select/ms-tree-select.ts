@@ -88,6 +88,8 @@ controlComponent.extend({
                 this.displayValue = nodes[0].title;
             }
             // avalon.vmodels[this.panelVmId].checkedKeys = value;
+            var vPanelVmId = this.panelVmId;
+            avalon['vmodels'][vPanelVmId]['checkedKeys'] = value;
             this.selection = nodes.map(n => ({ key: n.key, title: n.title }));
             return nodes;
         },

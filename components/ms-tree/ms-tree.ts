@@ -19,8 +19,8 @@ avalon.component('ms-tree', {
             const treeObj = $.fn.zTree.getZTreeObj(treeId);
             const checkedNodes = treeObj.getNodesByFilter(n => {
                 const parentNode = n.getParentNode();
-                const checkStatus = n.getCheckStatus();
-                const parentCheckStatus = parentNode ? parentNode.getCheckStatus() : { checked: false, half: false };
+                const checkStatus = n.getCheckStatus() || { checked: false, half: false };
+                const parentCheckStatus = parentNode ? (parentNode.getCheckStatus() || { checked: false, half: false }): { checked: false, half: false };
                 return (checkStatus.checked && !checkStatus.half) && (!parentCheckStatus.checked || parentCheckStatus.half);
             });
             const checkedKeys = checkedNodes.map(n => n.key);

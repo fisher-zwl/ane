@@ -15,6 +15,7 @@ avalon.component('ms-tree', {
         selectedKeys: [],
         onCheck: avalon.noop,
         onSelect: avalon.noop,
+        beforeExpand: avalon.noop,
         handleCheck(e, treeId, node) {
             const treeObj = $.fn.zTree.getZTreeObj(treeId);
             const checkedNodes = treeObj.getNodesByFilter(n => {
@@ -59,6 +60,15 @@ avalon.component('ms-tree', {
                         },
                         onClick: (e, treeId, node, clickFlag) => {
                             this.handleSelect(e, treeId, node, clickFlag);
+                        },
+                        beforeExpand: (treeId, treeNode) => {
+                            this.beforeExpand(treeId, treeNode);
+                            return (treeNode.expand !== false);
+                        }
+                    },
+                    view: {
+                        fontCss: (treeId, treeNode) => {
+                            return (!!treeNode.highlight) ? {color: "#A60000", "font-weight":"bold"} : {color: "#333", "font-weight":"normal"};
                         }
                     }
                 }, tree);

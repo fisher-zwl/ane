@@ -141,9 +141,8 @@ avalon.component('ms-calendar', {
             this.weekdays = weekdays;
             const monthList = moment.localeData().monthsShort();
             this.monthOptions = monthList.map(m => ({ label: that.monthListLang[m], value: m }));
+            this.$value = this.$selected = moment(that.value.split(','));
             this.calcTable(this.$value.clone());
-
-            this.value = this.$value.toArray().toString();
             this.$watch('value', v => {
                 this.$value = this.$selected = moment(v.split(','));
                 this.calcTable(this.$value.clone());

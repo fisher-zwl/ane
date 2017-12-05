@@ -25,6 +25,7 @@ controlComponent.extend({
     displayName: 'ms-datepicker',
     template: require('./ms-datepicker.html'),
     defaults: {
+        clearShow: "none",
         selected: '',
         format: 'YYYY-MM-DD',
         startDate: '',
@@ -78,6 +79,12 @@ controlComponent.extend({
                     denyValidate: true,
                     type: 'datepicker-changed'
                 });
+            });
+            this.$watch('selected', v => {
+                if (v.length > 0)
+                    this.clearShow = "";
+                else
+                    this.clearShow = "none";
             });
             if (this.showTime && this.format === 'YYYY-MM-DD') {
                 // 允许选择时间的模式下，用户如果没自定义格式，则自动转为日期时间格式

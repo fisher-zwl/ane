@@ -1,4 +1,5 @@
 import * as avalon from 'avalon2';
+import * as $ from 'jquery';
 import { parseSlotToVModel } from '../../ane-util';
 
 if (avalon.msie <= 8) {
@@ -42,6 +43,16 @@ avalon.component('ms-radio', {
         helpId: '',
         onInit(event) {
             this.helpId = this.$id;
+            $("input[type='radio'] + .text").addClass('check');
+            $("input[type='radio']:checked + .text").removeClass('check');
+            $("input[type='radio']:checked + .text").addClass('checked');
+            
+            this.$watch('checked', function(v,e) {
+                $("input[type='radio'] + .text").addClass('check');
+                $("input[type='radio'] + .text").removeClass('checked');
+                $("input[type='radio']:checked + .text").removeClass('check');
+                $("input[type='radio']:checked + .text").addClass('checked');
+            });
         }
     }
 });

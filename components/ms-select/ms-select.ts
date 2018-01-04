@@ -21,6 +21,7 @@ controlComponent.extend({
         displayValue: '',
         showSearch: false,
         searchValue: '',
+        disabledSelect: false,
         focusSearch() {
             this.$element.getElementsByTagName('input').search.focus();
         },
@@ -31,6 +32,9 @@ controlComponent.extend({
             return this.$element;
         },
         handleClick(e) {
+            if(this.disabledSelect){
+                return false;
+            }
             if (!this.panelVisible) {
                 this.searchValue = '';
                 this.panelWidth = this.$element.offsetWidth;

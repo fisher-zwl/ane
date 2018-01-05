@@ -22,6 +22,7 @@ controlComponent.extend({
         showSearch: false,
         searchValue: '',
         disabledSelect: false,
+        justSearchLabel: false,
         focusSearch() {
             this.$element.getElementsByTagName('input').search.focus();
         },

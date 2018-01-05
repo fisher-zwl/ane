@@ -11,6 +11,7 @@ export default function (cmpVm) {
         loading: false,
         isMultiple: cmpVm.isMultiple,
         options: cmpVm.options.toJSON(),
+        justSearchLabel: cmpVm.justSearchLabel,
         searchValue: '',
         getFilteredOptions() {
             return this.options.filter(this.filterFn);
@@ -23,7 +24,11 @@ export default function (cmpVm) {
                 return true;
             }
             const reg = new RegExp(avalon.escapeRegExp(this.searchValue), 'i');
-            return reg.test(el.label) || reg.test(el.value);
+            if (this.justSearchLabel) {
+                return reg.test(el.label);
+            } else {
+                return reg.test(el.label) || reg.test(el.value);
+            }
         },
         handleOptionClick(e, option) {
             if (option.disabled) {

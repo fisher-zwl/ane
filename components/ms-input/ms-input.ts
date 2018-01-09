@@ -10,6 +10,7 @@ controlComponent.extend({
         text: '',
         type: 'input', 
         disabled: false,
+        isClear:false,
         mapValueToText(value) {
             this.text = value;
         },
@@ -22,6 +23,16 @@ controlComponent.extend({
                     denyValidate: true,
                     type: 'changed'
                 });
+            });
+            this.$watch('isClear',function(v){
+                if(v){
+                    this.mapValueToText('');
+                    this.handleChange({
+                        target: { value: '' },
+                        denyValidate: true,
+                        type: 'changed'
+                    });
+                }
             });
             this.mapValueToText(this.value);
         }

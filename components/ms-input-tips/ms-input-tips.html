@@ -6,7 +6,7 @@
         :attr="{name:@col,placeholder:@placeholder,type:@type,disabled:@disabled,title:@text}" 
         :css="{width:@width,borderColor: (@tips_error ? @error_color : '')}" 
         data-duplex-changed="@handleChange">
-    <span :if="@tips_clear">
+    <span :if="@tips_clear && @x_show">
         <i class="fa fa-times ane-input-tips-clear" 
             :if="@x_show" 
             :css="{color:( @tips_error ? @error_color : @success_color)}" 

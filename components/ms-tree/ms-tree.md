@@ -4,7 +4,7 @@
 
 ```html
 <div :controller="tree">
-    <ms-tree :widget="{checkable: true,tree: @data, checkedKeys: @checkedKeys, expandedKeys: @expandedKeys, onCheck:@handleCheck}"></ms-tree>
+    <ms-tree :widget="{checkable: true,tree: @data, checkedKeys: @checkedKeys, expandedKeys: @expandedKeys, onCheck:@handleCheck, onDblClick:@onDblClick}"></ms-tree>
 </div>
 ```
 
@@ -43,6 +43,10 @@ avalon.define({
     checkedKeys: [10, 11, 12],
     handleCheck(checkedKeys) {
         console.log(checkedKeys);
+    },
+    onDblClick(selectedKeys, e){
+        console.log(selectedKeys);
+        console.log(e);
     }
 })
 ```
@@ -57,6 +61,7 @@ avalon.define({
 | checkedKeys | 勾选的节点的 key 集合 | string\[\] | \[\] |
 | onCheck | 勾选节点的回调，只有当 checkable 为 true 时有效 | function(checkedKeys, e:{checked: bool, checkedNodes, node, event}) | noop |
 | onSelect | 选择节点的回调 | function(selectedKeys, e:{selected: bool, selectedNodes, node, event}) | noop |
+| onDblClick | 双击节点的回调 | function(selectedKeys, e:{selectedNodes, node, event}) | noop |
 
 
 TreeNode

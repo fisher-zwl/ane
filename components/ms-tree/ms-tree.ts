@@ -16,6 +16,7 @@ avalon.component('ms-tree', {
         onCheck: avalon.noop,
         onSelect: avalon.noop,
         beforeExpand: avalon.noop,
+        onDblClick: avalon.noop,
         handleCheck(e, treeId, node) {
             const treeObj = $.fn.zTree.getZTreeObj(treeId);
             const checkedNodes = treeObj.getNodesByFilter(n => {
@@ -45,6 +46,16 @@ avalon.component('ms-tree', {
                 event: e
             });
         },
+        handleDblClick(e, treeId, node) {
+            this.selectedKeys = [node.key];
+            this.onDblClick(this.selectedKeys.toJSON(), {
+                selectedNodes: [{
+                    key: node.key, title: node.title
+                }],
+                node: node,
+                event: e
+            });
+        },
         onInit(event) {
             var initTree = (el, tree) => {
                 return $.fn.zTree.init($(el), {
@@ -64,9 +75,13 @@ avalon.component('ms-tree', {
                         beforeExpand: (treeId, treeNode) => {
                             this.beforeExpand(treeId, treeNode);
                             return (treeNode.expand !== false);
+                        },
+                        onDblClick: (e, treeId, node) => {
+                            this.handleDblClick(e, treeId, node);
                         }
                     },
                     view: {
+                        dblClickExpand: false,
                         fontCss: (treeId, treeNode) => {
                             return (!!treeNode.highlight) ? {color: "#A60000", "font-weight":"bold"} : {color: "#333", "font-weight":"normal"};
                         }

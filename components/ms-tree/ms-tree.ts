@@ -22,11 +22,11 @@ avalon.component('ms-tree', {
             const checkedNodes = treeObj.getNodesByFilter(n => {
                 const parentNode = n.getParentNode();
                 const checkStatus = n.getCheckStatus() || { checked: false, half: false };
-                const parentCheckStatus = parentNode ? (parentNode.getCheckStatus() || { checked: false, half: false }): { checked: false, half: false };
+                const parentCheckStatus = parentNode ? (parentNode.getCheckStatus() || { checked: false, half: false }) : { checked: false, half: false };
                 return (checkStatus.checked && !checkStatus.half) && (!parentCheckStatus.checked || parentCheckStatus.half);
             });
             const checkedKeys = checkedNodes.map(n => n.key);
-            
+
             //this.checkedKeys = checkedKeys
             this.onCheck(checkedKeys, {
                 checked: node.checked,
@@ -47,6 +47,8 @@ avalon.component('ms-tree', {
             });
         },
         handleDblClick(e, treeId, node) {
+            if (!node)
+                return;
             this.selectedKeys = [node.key];
             this.onDblClick(this.selectedKeys.toJSON(), {
                 selectedNodes: [{
@@ -83,7 +85,7 @@ avalon.component('ms-tree', {
                     view: {
                         dblClickExpand: false,
                         fontCss: (treeId, treeNode) => {
-                            return (!!treeNode.highlight) ? {color: "#A60000", "font-weight":"bold"} : {color: "#333", "font-weight":"normal"};
+                            return (!!treeNode.highlight) ? { color: "#A60000", "font-weight": "bold" } : { color: "#333", "font-weight": "normal" };
                         }
                     }
                 }, tree);
@@ -102,7 +104,7 @@ avalon.component('ms-tree', {
                     });
                 }
             });
-            
+
             this.$watch('expandedKeys', v => {
                 treeObj.expandAll(false);
                 treeObj.getNodesByFilter(n => v.contains(n.key)).forEach(n => {

@@ -211,7 +211,7 @@
 		var _updateNode = zTreeTools.updateNode;
 		zTreeTools.updateNode = function(node, checkTypeFlag) {
 			if (_updateNode) _updateNode.apply(zTreeTools, arguments);
-			if (!node || !this.setting.check || !this.setting.check.enable) return;
+			if (!node || !this.setting || !this.setting.check.enable) return;
 			var nObj = $$(node, this.setting);
 			if (nObj.get(0) && tools.uCanDo(this.setting)) {
 				var checkObj = $$(node, consts.id.CHECK, this.setting);

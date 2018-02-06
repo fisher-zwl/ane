@@ -4,7 +4,7 @@
 
 ```html
 <div :controller="tree">
-    <ms-tree :widget="{checkable: true,tree: @data, checkedKeys: @checkedKeys, expandedKeys: @expandedKeys, onCheck:@handleCheck, onDblClick:@onDblClick}"></ms-tree>
+    <ms-tree :widget="{checkable: true,tree: @data, checkedKeys: @checkedKeys, beforeExpand:@beforeExpand,beforeCollapse:@beforeCollapse,expandedKeys: @expandedKeys, onCheck:@handleCheck, onDblClick:@onDblClick}"></ms-tree>
 </div>
 ```
 
@@ -47,6 +47,12 @@ avalon.define({
     onDblClick(selectedKeys, e){
         console.log(selectedKeys);
         console.log(e);
+    },
+    beforeCollapse(treeId,treeNode){
+        console.log(treeNode);
+    },
+    beforeExpand(treeId,treeNode){
+        console.log(treeNode);
     }
 })
 ```

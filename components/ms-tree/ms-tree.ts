@@ -16,6 +16,7 @@ avalon.component('ms-tree', {
         onCheck: avalon.noop,
         onSelect: avalon.noop,
         beforeExpand: avalon.noop,
+        beforeCollapse: avalon.noop,
         onDblClick: avalon.noop,
         handleCheck(e, treeId, node) {
             const treeObj = $.fn.zTree.getZTreeObj(treeId);
@@ -77,6 +78,9 @@ avalon.component('ms-tree', {
                         beforeExpand: (treeId, treeNode) => {
                             this.beforeExpand(treeId, treeNode);
                             return (treeNode.expand !== false);
+                        },
+                        beforeCollapse: (treeId, treeNode) => {
+                            this.beforeCollapse(treeId, treeNode);
                         },
                         onDblClick: (e, treeId, node) => {
                             this.handleDblClick(e, treeId, node);

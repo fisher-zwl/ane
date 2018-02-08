@@ -4,7 +4,7 @@
 
 ``` html
 <div :controller="doc-textarea-basic">
-    <ms-textarea :widget="{value:@value}"></ms-textarea>
+    <ms-textarea :widget="{value:@value,placeholder:'test'}"></ms-textarea>
 </div>
 ```
 
@@ -14,7 +14,7 @@ import 'ane';
 
 const vm = avalon.define({
     $id: 'doc-textarea-basic',
-    value: '这个家伙很懒，什么也没留下'
+    value: ''
 });
 ```
 

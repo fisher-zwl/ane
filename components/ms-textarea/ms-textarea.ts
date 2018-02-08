@@ -7,6 +7,7 @@ import { findParentComponent } from '../../ane-util';
  * 多行文本输入组件
  * @prop value 组件值(inherit)
  * @prop col 字段路径(inherit)
+ * @prop placeholder 占位符(inherit)
  * @prop rows 文本框行数
  * 
  * @example
@@ -20,6 +21,7 @@ controlComponent.extend({
     defaults: {
         rows: '',
         text: '',
+        placeholder: '',
         mapValueToText(value) {
             this.text = value;
         },

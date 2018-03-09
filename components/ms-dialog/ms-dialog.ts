@@ -3,9 +3,6 @@ import * as bootbox from 'bootbox';
 import { parseSlotToVModel } from '../../ane-util';
 import * as $ from 'jquery';
 
-
-var dialog_vm;
-
 avalon.component('ms-dialog', {
     template: '<div style="display: none"><slot name="header" /><slot name="body"/><slot name="footer"/></div>',
     defaults: {
@@ -26,7 +23,6 @@ avalon.component('ms-dialog', {
         onCancel() { },
         onInit(event) {
             var vm = event.vmodel;
-            dialog_vm = event.vmodel;
             vm.$watch('show', (newV) => {
                 if (newV) {
                     vm.$dialog = bootbox.dialog({
@@ -90,7 +86,7 @@ avalon.component('ms-dialog', {
                     avalon.scan(vm.$dialog.get(0));
                     if (this.isMove) {
                         vm.$dialog.find('.modal-header').css('cursor', 'move');
-                        DragDrop.enable();//拖放初始化
+                        this.DragDrop().enable();//拖放初始化
                     }
                 } else {
                     if (vm.$dialog) {
@@ -101,6 +97,7 @@ avalon.component('ms-dialog', {
             });
         },
         onReady(event) {
+            let _this = this;
             parseSlotToVModel(this);
             this.show && this.$fire('show', true);
             $(window).resize(function () {
@@ -108,80 +105,79 @@ avalon.component('ms-dialog', {
                     return;
                 var left = $(".modal-content").offset().left;
                 var top = $(".modal-content").offset().top;
-                dialog_vm.move_return(left, top);
+                _this.move_return(left, top);
             });
         },
         onDispose(event) {
         },
-        move_return: avalon.noop
+        move_return: avalon.noop,
+        DragDrop: function () {
+            let _this = this;
+            var dragdrap = {
+                "enable": function () {
+                    $(document).mousedown(handleEvent);
+                    $(document).mousemove(handleEvent);
+                    $(document).mouseup(handleEvent);
+                },
+                "disable": function () {
+                    $(document).unbind('mousedown');
+                    $(document).unbind('mousemove');
+                    $(document).unbind('mouseup');
+                }
+            },
+                dragging = null,
+                diffX = 0,
+                diffY = 0;
+
+            function handleEvent(event) {
+
+                event = event || window.event;
+
+                switch (event.type) {
+                    case 'mousedown':
+
+                        var target = event.target || event.srcElement,
+                            targetParent = target.offsetParent;
+
+                        if (targetParent == null) {
+                            return;
+                        }
+                        // if(targetParent.className.indexOf('yhglDraggable') == -1){
+                        //     return;
+                        // }
+                        if (event.target.className == 'modal-header' || event.target.parentElement.className == 'modal-header') {
+                            dragging = targetParent;
+                            diffX = event.clientX - targetParent.offsetLeft;
+                            diffY = event.clientY - targetParent.offsetTop;
+                        } else {
+                            return;
+                        }
+                        break;
+
+                    case 'mousemove':
+
+                        if (dragging !== null) {
+                            dragging.style.left = (event.clientX - diffX) + 'px';
+                            dragging.style.top = (event.clientY - diffY) + 'px';
+                            var content_left = $(".modal-content").offset().left;
+                            var content_top = $(".modal-content").offset().top;
+                            _this.move_return(content_left, content_top);
+                        } else {
+                            return;
+                        }
+                        break;
+
+                    case 'mouseup':
+
+                        if (dragging !== null) {
+                            dragging = null;
+                        } else {
+                            return;
+                        }
+                        break;
+                };
+            };
+            return dragdrap;
+        }
     }
 });
-
-//拖放
-let DragDrop = function () {
-    var dragdrap = {
-        "enable": function () {
-            $(document).mousedown(handleEvent);
-            $(document).mousemove(handleEvent);
-            $(document).mouseup(handleEvent);
-        },
-        "disable": function () {
-            $(document).unbind('mousedown');
-            $(document).unbind('mousemove');
-            $(document).unbind('mouseup');
-        }
-    },
-        dragging = null,
-        diffX = 0,
-        diffY = 0;
-
-    function handleEvent(event) {
-
-        event = event || window.event;
-
-        switch (event.type) {
-            case 'mousedown':
-
-                var target = event.target || event.srcElement,
-                    targetParent = target.offsetParent;
-
-                if (targetParent == null) {
-                    return;
-                }
-                // if(targetParent.className.indexOf('yhglDraggable') == -1){
-                //     return;
-                // }
-                if (event.target.className == 'modal-header' || event.target.parentElement.className == 'modal-header') {
-                    dragging = targetParent;
-                    diffX = event.clientX - targetParent.offsetLeft;
-                    diffY = event.clientY - targetParent.offsetTop;
-                } else {
-                    return;
-                }
-                break;
-
-            case 'mousemove':
-
-                if (dragging !== null) {
-                    dragging.style.left = (event.clientX - diffX) + 'px';
-                    dragging.style.top = (event.clientY - diffY) + 'px';
-                    var content_left = $(".modal-content").offset().left;
-                    var content_top = $(".modal-content").offset().top;
-                    dialog_vm.move_return(content_left, content_top);
-                } else {
-                    return;
-                }
-                break;
-
-            case 'mouseup':
-
-                if (dragging !== null) {
-                    dragging = null;
-                } else {
-                    return;
-                }
-                break;
-        };
-    };
-    return dragdrap;
-}();

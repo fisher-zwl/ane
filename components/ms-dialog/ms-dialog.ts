@@ -104,6 +104,8 @@ avalon.component('ms-dialog', {
             parseSlotToVModel(this);
             this.show && this.$fire('show', true);
             $(window).resize(function () {
+                if (!$(".modal-content").offset())
+                    return;
                 var left = $(".modal-content").offset().left;
                 var top = $(".modal-content").offset().top;
                 dialog_vm.move_return(left, top);

@@ -3,6 +3,9 @@ import * as bootbox from 'bootbox';
 import { parseSlotToVModel } from '../../ane-util';
 import * as $ from 'jquery';
 
+
+var dialog_vm;
+
 avalon.component('ms-dialog', {
     template: '<div style="display: none"><slot name="header" /><slot name="body"/><slot name="footer"/></div>',
     defaults: {
@@ -16,13 +19,14 @@ avalon.component('ms-dialog', {
         $innerVm: '',
         okText: '',
         cancelText: '',
-        height:'',
-        width:'',
-        isMove:false,
-        onOk() {},
-        onCancel() {},
+        height: '',
+        width: '',
+        isMove: false,
+        onOk() { },
+        onCancel() { },
         onInit(event) {
             var vm = event.vmodel;
+            dialog_vm = event.vmodel;
             vm.$watch('show', (newV) => {
                 if (newV) {
                     vm.$dialog = bootbox.dialog({
@@ -56,31 +60,36 @@ avalon.component('ms-dialog', {
                             }
                         }, 100);
                     })
-                    .on('shown.bs.modal', () => {
-                        
-                    });
-                    if(this.height && this.width){
+                        .on('shown.bs.modal', () => {
+
+                        });
+                    if (this.height && this.width) {
                         let height = this.height,
                             width = this.width;
                         vm.$dialog.find('.modal-dialog').css({
-                            "width": width+"px",
+                            "width": width + "px",
                             "top": function () {
-                                return (vm.$dialog.height() - height - 70) / 2 + "px";  
+                                return (vm.$dialog.height() - height - 70) / 2 + "px";
                             }
                         });
-                        vm.$dialog.find('.modal-content').css({  
-                            "margin": "0px", 
-                            "height": height+"px",
-                            "width": width+"px"
+                        vm.$dialog.find('.modal-content').css({
+                            "margin": "0px",
+                            "height": height + "px",
+                            "width": width + "px"
                         });
+                        setTimeout(function () {
+                            var content_left = $(".modal-content").offset().left;
+                            var content_top = $(".modal-content").offset().top;
+                            vm.move_return(content_left, content_top);
+                        }, 500);
                     }
                     const $content = vm.$dialog.find('.modal-content').attr(':controller', this.$innerVm);
                     if (this.footer.length) {
                         $content.append($(this.footer));
                     }
                     avalon.scan(vm.$dialog.get(0));
-                    if(this.isMove){
-                        vm.$dialog.find('.modal-header').css('cursor','move');
+                    if (this.isMove) {
+                        vm.$dialog.find('.modal-header').css('cursor', 'move');
                         DragDrop.enable();//拖放初始化
                     }
                 } else {
@@ -94,21 +103,27 @@ avalon.component('ms-dialog', {
         onReady(event) {
             parseSlotToVModel(this);
             this.show && this.$fire('show', true);
+            $(window).resize(function () {
+                var left = $(".modal-content").offset().left;
+                var top = $(".modal-content").offset().top;
+                dialog_vm.move_return(left, top);
+            });
         },
         onDispose(event) {
-        }
+        },
+        move_return: avalon.noop
     }
 });
 
 //拖放
-let  DragDrop = function() {
-    var dragdrap ={
-        "enable":function() {
+let DragDrop = function () {
+    var dragdrap = {
+        "enable": function () {
             $(document).mousedown(handleEvent);
             $(document).mousemove(handleEvent);
             $(document).mouseup(handleEvent);
         },
-        "disable": function() {
+        "disable": function () {
             $(document).unbind('mousedown');
             $(document).unbind('mousemove');
             $(document).unbind('mouseup');
@@ -117,17 +132,17 @@ let  DragDrop = function() {
         dragging = null,
         diffX = 0,
         diffY = 0;
-  
+
     function handleEvent(event) {
-    
+
         event = event || window.event;
-    
-        switch(event.type) {
-            case 'mousedown' :
-                
+
+        switch (event.type) {
+            case 'mousedown':
+
                 var target = event.target || event.srcElement,
                     targetParent = target.offsetParent;
-                
+
                 if (targetParent == null) {
                     return;
                 }
@@ -142,19 +157,22 @@ let  DragDrop = function() {
                     return;
                 }
                 break;
-                
-            case 'mousemove' :
-                
+
+            case 'mousemove':
+
                 if (dragging !== null) {
                     dragging.style.left = (event.clientX - diffX) + 'px';
                     dragging.style.top = (event.clientY - diffY) + 'px';
+                    var content_left = $(".modal-content").offset().left;
+                    var content_top = $(".modal-content").offset().top;
+                    dialog_vm.move_return(content_left, content_top);
                 } else {
                     return;
                 }
                 break;
-            
-            case 'mouseup' :
-                
+
+            case 'mouseup':
+
                 if (dragging !== null) {
                     dragging = null;
                 } else {

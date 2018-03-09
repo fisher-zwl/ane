@@ -4,7 +4,7 @@
 
 ``` html
 <div :controller="doc-dialog-basic">
-    <ms-dialog :widget="{$innerVm: 'doc-dialog-basic_form', show: @show, onCancel: @handleCancel, onOk: @handleOk,height:230,width:500,isMove:true}">
+    <ms-dialog :widget="{$innerVm: 'doc-dialog-basic_form', show: @show, onCancel: @handleCancel, onOk: @handleOk,height:230,width:500,isMove:true, move_return:@move_return}">
         <div slot="body" ms-skip>
             <xmp is="ms-form">
                 <ms-form-item :widget="{label: '标题'}">
@@ -30,6 +30,10 @@ const vm = avalon.define({
     },
     handleOk() {
         this.show = false;
+    },
+    move_return(a, b){
+        console.log(a);
+        console.log(b);
     }
 });
 

@@ -56,6 +56,61 @@ avalon.define({
     }
 })
 ```
+### 半勾选状态清除
+```html
+<div :controller="treeHalfCheck">
+    <ms-tree :widget="{checkable: true,tree: @data,halfCheckable:true, checkedKeys: @checkedKeys, beforeExpand:@beforeExpand,beforeCollapse:@beforeCollapse,expandedKeys: @expandedKeys, onCheck:@handleCheck, onDblClick:@onDblClick}"></ms-tree>
+</div>
+```
+
+```js
+import * as avalon from 'avalon2';
+import 'ane';
+
+avalon.define({
+    $id: "treeHalfCheck",
+    data: [
+        {key: 1, title: "aaa",halfCheck:true, children: [
+                {key: 7, title: 1111, children: []},
+                {key: 8, title: 2222,halfCheck:true, children: [
+                        {key: 14, title: 777, children: []}
+                    ]},
+                {key: 9, title: 3333,halfCheck:true, children: [
+                        {key: 15, title: 8888, children: []},
+                        {key: 16, title: 9999, children: [
+                                {key: 17, title: '司徒正美', children: []}
+                            ]}
+                    ]}
+            ]},
+        {key: 2, title: "bbb", children: [
+                {key: 10, title: 4444, children: []},
+                {key: 11, title: 5555, children: []},
+                {key: 12, title: 6666, children: []}
+            ]},
+        {key: 3, title: "ccc", children: []},
+        {key: 4, title: "ddd", children: []},
+        {key: 5, title: "eee", children: [
+                {key: 13, title: 1234, children: []}
+            ]},
+        {key: 6, title: "fff",isParent:true, children: []}
+    ],
+    expandedKeys: [1, 8],
+    checkedKeys: [10, 11, 12],
+    handleCheck(checkedKeys,node) {
+        console.log(checkedKeys,node);
+    },
+    onDblClick(selectedKeys, e){
+        console.log(selectedKeys);
+        console.log(e);
+    },
+    beforeCollapse(treeId,treeNode){
+        console.log(treeNode);
+    },
+    beforeExpand(treeId,treeNode){
+        console.log(treeNode);
+    }
+})
+```
 
 ### 组件参数
 

@@ -9,10 +9,12 @@ avalon.component('ms-tree', {
     template: require('./ms-tree.html'),
     defaults: {
         checkable: false,
+        halfCheckable:false,
         tree: [],
         expandedKeys: [],
         checkedKeys: [],
         selectedKeys: [],
+        currentTarget:'',
         onCheck: avalon.noop,
         onSelect: avalon.noop,
         beforeExpand: avalon.noop,
@@ -27,14 +29,15 @@ avalon.component('ms-tree', {
                 return (checkStatus.checked && !checkStatus.half) && (!parentCheckStatus.checked || parentCheckStatus.half);
             });
             const checkedKeys = checkedNodes.map(n => n.key);
-
             //this.checkedKeys = checkedKeys
-            this.onCheck(checkedKeys, {
-                checked: node.checked,
-                checkedNodes: checkedNodes,
-                node: node,
-                event: e
-            });
+            if(this.currentTarget == node.key){
+                this.onCheck(checkedKeys, {
+                    checked: node.checked,
+                    checkedNodes: checkedNodes,
+                    node: node,
+                    event: e
+                });
+            }
         },
         handleSelect(e, treeId, node, clickFlag) {
             this.selectedKeys = [node.key];
@@ -59,10 +62,19 @@ avalon.component('ms-tree', {
                 event: e
             });
         },
+        cancelHalf(e,treeId,treeNode){//半勾选清除功能
+            var zTree = $.fn.zTree.getZTreeObj(treeId);
+            treeNode.halfCheck = false;
+            zTree.updateNode(treeNode);
+            this.handleCheck(e, treeId, treeNode);
+        },
         onInit(event) {
             var initTree = (el, tree) => {
                 return $.fn.zTree.init($(el), {
-                    check: { enable: this.checkable },
+                    check: { 
+                        enable: this.checkable,
+                        autoCheckTrigger: this.halfCheckable
+                    },
                     data: {
                         key: {
                             name: 'title'
@@ -70,7 +82,11 @@ avalon.component('ms-tree', {
                     },
                     callback: {
                         onCheck: (e, treeId, node) => {
-                            this.handleCheck(e, treeId, node);
+                            if(this.halfCheckable && node.halfCheck){
+                                this.cancelHalf(e,treeId,node);
+                            }else{
+                                this.handleCheck(e, treeId, node);
+                            }
                         },
                         onClick: (e, treeId, node, clickFlag) => {
                             this.handleSelect(e, treeId, node, clickFlag);
@@ -81,6 +97,9 @@ avalon.component('ms-tree', {
                         },
                         beforeCollapse: (treeId, treeNode) => {
                             this.beforeCollapse(treeId, treeNode);
+                        },
+                        beforeCheck: (treeId, treeNode) => {
+                            this.currentTarget = treeNode.key;
                         },
                         onDblClick: (e, treeId, node) => {
                             this.handleDblClick(e, treeId, node);

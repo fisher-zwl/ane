@@ -5,7 +5,7 @@
     role="combobox"
     aria-autocomplete="list"
     aria-haspopup="true"
-    :attr="{'aria-expanded': @panelVisible + ''}">
+    :attr="{'aria-expanded': @panelVisible + '','readonly':(@disabledSelect ? true:false)}">
     <ul class="ane-select-selection" :class="[(@isMultiple ? 'ane-select-tags' : '')]">
         <li class="ane-select-selected" :attr="{title:@displayValue}" :visible="!@isMultiple && (!@showSearch || !@panelVisible)">{{@displayValue}}</li>
         <li class="ane-select-choice" :for="choice in @selection">

@@ -34,6 +34,40 @@ const vm = avalon.define({
 });
 ```
 
+### 禁用下拉选择框
+
+``` html
+<div :controller="doc-select-readOnly">
+    <xmp is="ms-form" :widget="{$form: @$form}">
+        <ms-form-item>
+            <ms-select :widget="{col:'comic',disabledSelect:true}">
+                <ms-select-option :widget="{value:'onepiece'}">海贼王</ms-select-option>
+                <ms-select-option :widget="{value:'conna'}">名侦探柯南</ms-select-option>
+                <ms-select-option :widget="{value:'titan'}">进击的巨人</ms-select-option>
+                <ms-select-option :widget="{value:'disabled', disabled:true}">禁用</ms-select-option>
+                <ms-select-option :widget="{value:'onepunchman'}">一拳超人</ms-select-option>
+            </ms-select>
+        </ms-form-item>
+    </xmp>
+    <pre>{{@json}}</pre>
+</div>
+```
+
+``` js
+import * as avalon from 'avalon2';
+import { createForm } from 'ane';
+
+const readOnly = avalon.define({
+    $id: 'doc-select-readOnly',
+    json: '',
+    $form: createForm({
+        onFieldsChange(fields, record) {
+            readOnly.json = JSON.stringify(record);
+        }
+    })
+});
+```
+
 ### 多选
 
 ``` html
@@ -112,6 +146,7 @@ avalon.define({
 |-----|-----|-----|-----|
 | value | 默认值 | string\[\] | \[\] |
 | mode | 模式 | 'combobox' \| 'multiple' \| 'tags' | '' |
+| disabledSelect | 禁用选择框 | boolean| false |
 | options | 下拉选项，可以替代ms-select-option | {label:string,value:string,disabled:boolean}\[\] | \[\] |
 | showSearch | 是否显示搜索框 | boolean | false |
 | remote | 是否为远程搜索 | boolean | false |

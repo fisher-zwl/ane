@@ -23,6 +23,7 @@ controlComponent.extend({
         searchValue: '',
         disabledSelect: false,
         justSearchLabel: false,
+        panelClassName:'ane-select-panel',
         focusSearch() {
             this.$element.getElementsByTagName('input').search.focus();
         },

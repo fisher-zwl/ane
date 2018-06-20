@@ -13,6 +13,7 @@ export default function (cmpVm) {
         options: cmpVm.options.toJSON(),
         justSearchLabel: cmpVm.justSearchLabel,
         searchValue: '',
+        className:cmpVm.panelClassName,
         getFilteredOptions() {
             return this.options.filter(this.filterFn);
         },

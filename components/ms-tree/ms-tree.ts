@@ -10,7 +10,7 @@ avalon.component('ms-tree', {
     defaults: {
         checkable: false,
         halfCheckable:false,
-        chkboxType:{"Y": "ps", "N": "ps"},
+        $mychkboxType:{"Y": "ps", "N": "ps"},
         tree: [],
         expandedKeys: [],
         checkedKeys: [],
@@ -75,7 +75,7 @@ avalon.component('ms-tree', {
                     check: { 
                         enable: this.checkable,
                         autoCheckTrigger: this.halfCheckable,
-                        chkboxType: this.chkboxType
+                        chkboxType: this.$mychkboxType
                     },
                     data: {
                         key: {

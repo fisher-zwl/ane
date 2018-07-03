@@ -30,6 +30,7 @@ controlComponent.extend({
         format: 'YYYY-MM-DD',
         startDate: '',
         endDate: '',
+        className:'',
         disabledDate() { return false; },
         showTime: false,
         clear() {

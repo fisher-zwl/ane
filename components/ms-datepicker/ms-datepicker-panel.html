@@ -1,4 +1,4 @@
-<div class="ane-datepicker-panel" style="overflow: auto">
+<div class="ane-datepicker-panel" :class="@className" style="overflow: auto">
     <div class="ane-datepicker-panel-header" :visible="@viewMode === 0">
         <a class="ane-datepicker-prev-year-btn" :click="mutate('subtract', 1, 'years')">
             <i class="fa fa-angle-double-left"></i>

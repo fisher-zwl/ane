@@ -5,7 +5,8 @@
 ```html
 <div>
     <ms-datepicker :widget="{
-        placeholder:'请选择入学时间'
+        placeholder:'请选择入学时间',
+        className:'datepicker-className'
     }"></ms-datepicker>
 </div>
 ```
@@ -51,6 +52,7 @@
 | format | 日期格式，参考 momentjs | string | `'YYYY-MM-DD'` |
 | startDate | 控制可以选择的日期范围的开始日期 | string | '' |
 | endDate | 控制可以选择的日期范围的结束日期 | string | '' |
+| className |日期面板自定义类名| string | '' |
 | disabledDate | 不可选择日期的判断函数，传入 current（当前遍历日期的毫秒值），返回 true 表示此日期不可选 | function(current:number) | `() => false` |
 | showTime | 是否需要选择时间，如果此项为 true，则 format 默认为 YYYY-MM-DD HH:mm:ss | boolean | false |
 | direction | 下拉框弹出方向，目前只有 `up`/`down` 两个选项 | string | `down` |
